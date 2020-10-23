@@ -1,0 +1,106 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[OpsDB_Production_Data_Cvtg]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[OpsDB_Production_Data_Cvtg] (
+	[CentralRcdIdx] bigint IDENTITY(1, 1) NOT NULL,
+	[SITE] varchar(50) NULL,
+	[ProcessOrder] varchar(100) NULL,
+	[PLId] int NULL,
+	[PUId] int NULL,
+	[EventId] int NULL,
+	[StartTime] datetime NULL,
+	[EndTime] datetime NULL,
+	[StartTimeUTC] datetimeoffset(7) NULL,
+	[EndTimeUTC] datetimeoffset(7) NULL,
+	[ProdId] int NULL,
+	[PLDesc] varchar(50) NULL,
+	[ReliabilityPUID] int NULL,
+	[PUDesc] varchar(50) NULL,
+	[ShiftDesc] varchar(100) NULL,
+	[TeamDesc] varchar(100) NULL,
+	[ProdCode] varchar(50) NULL,
+	[ProdDesc] varchar(100) NULL,
+	[ProdFamily] varchar(100) NULL,
+	[ProdGroup] varchar(100) NULL,
+	[PPId] int NULL,
+	[POStatus] varchar(50) NULL,
+	[PPStatusId] int NULL,
+	[BatchNumber] varchar(100) NULL,
+	[TotalUnits] float NULL,
+	[GoodUnits] float NULL,
+	[RejectUnits] float NULL,
+	[WebWidth] float NULL,
+	[SheetWidth] float NULL,
+	[LineSpeedIdeal] float NULL,
+	[LineSpeedTarget] float NULL,
+	[LineSpeedAvg] float NULL,
+	[TargetLineSpeed] float NULL,
+	[LineStatus] varchar(50) NULL,
+	[RollsPerLog] float NULL,
+	[RollsInPack] float NULL,
+	[PacksInBundle] float NULL,
+	[CartonsInCase] float NULL,
+	[SheetCount] float NULL,
+	[ShipUnit] int NULL,
+	[CalendarRuntime] float NULL,
+	[ProductionRuntime] float NULL,
+	[PlanningRuntime] float NULL,
+	[OperationsRuntime] float NULL,
+	[SheetLength] float NULL,
+	[StatFactor] float NULL,
+	[TargetUnits] float NULL,
+	[ActualUnits] float NULL,
+	[OperationsTargetUnits] float NULL,
+	[HolidayCurtailDT] float NULL,
+	[PlninterventionDT] float NULL,
+	[ChangeOverDT] float NULL,
+	[HygCleaningDT] float NULL,
+	[EOProjectsDT] float NULL,
+	[UnscheduledDT] float NULL,
+	[CLAuditsDT] float NULL,
+	[IdealUnits] float NULL,
+	[RollWidth2Stage] float NULL,
+	[RollWidth3Stage] float NULL,
+	[SplitUptime] float NULL,
+	[Runtime] float NULL,
+	[CnvtLineSpeedToSheetLength] float NULL,
+	[CnvtParentRollWidthToSheetWidth] float NULL,
+	[DefaultPMRollWidth] float NULL,
+	[LineSpeedUOM] varchar(10) NULL,
+	[SheetLengthSpec] float NULL,
+	[SheetLengthSpecUOM] varchar(10) NULL,
+	[SheetWidthSpec] float NULL,
+	[SheetWidthSpecUOM] varchar(10) NULL,
+	[PlannedRejectLogs] int NULL,
+	[UnplannedRejectLogs] int NULL,
+	[BreakoutRejectLogs] int NULL,
+	[ManualRejectLogs] int NULL,
+	[OtherRejectLogs] int NULL,
+	[ILOCSetpointTarget] float NULL,
+	[ILOCSetpointAverage] float NULL,
+	[ILOCSetpointSampleCount] float NULL,
+	[ILOCActualAverage] float NULL,
+	[ILOCActualSampleCount] float NULL,
+	[ts] datetime NULL,
+	[deleteflag] int NULL,
+	[SITE_DIMENSION_SiteId] int NOT NULL,
+	[LINE_DIMENSION_CentralLineId] int NOT NULL,
+	[RcdIdx] bigint NOT NULL,
+CONSTRAINT [FK_OpsDB_Production_Data_Cvtg_LINE_DIMENSION]
+	FOREIGN KEY ([LINE_DIMENSION_CentralLineId])
+	REFERENCES [dbo].[LINE_DIMENSION] ([CentralLineId]),
+CONSTRAINT [FK_OpsDB_Production_Data_Cvtg_SITE_DIMENSION]
+	FOREIGN KEY ([SITE_DIMENSION_SiteId])
+	REFERENCES [dbo].[SITE_DIMENSION] ([SiteId]),
+CONSTRAINT [PK_OpsDB_Production_Data_Cvtg]
+	PRIMARY KEY NONCLUSTERED ([CentralRcdIdx] ASC))
+END
+GO
+
+IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[OpsDB_Production_Data_Cvtg]') AND name = N'IDX_UQ_OpsDB_Production_Data_Cvtg_SiteId_RcdIdx')
+	CREATE UNIQUE NONCLUSTERED INDEX [IDX_UQ_OpsDB_Production_Data_Cvtg_SiteId_RcdIdx] ON [dbo].[OpsDB_Production_Data_Cvtg]
+		([SITE_DIMENSION_SiteId] , [RcdIdx
+GO

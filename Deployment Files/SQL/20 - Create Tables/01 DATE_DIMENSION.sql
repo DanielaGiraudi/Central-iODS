@@ -1,0 +1,15 @@
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[DATE_DIMENSION]') AND type in (N'U'))
+BEGIN
+CREATE TABLE [dbo].[DATE_DIMENSION] (
+	[DateId] int NOT NULL,
+	[DateDesc] nvarchar(200) NULL,
+	[RelativeStartTime] nvarchar(500) NULL,
+	[RelativeEndTime] nvarchar(500) NULL,
+CONSTRAINT [PK_DATE_DIMENSION]
+	PRIMARY KEY NONCLUSTERED ([DateId]))
+END
+GO
