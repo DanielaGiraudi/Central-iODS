@@ -1,4 +1,4 @@
-DROP PROCEDURE splocal_InsertWorkCellDimension;
+DROP PROCEDURE splocal_InsertWorkCellDimension
 GO
 
 CREATE PROCEDURE splocal_InsertWorkCellDimension
@@ -6,10 +6,10 @@ CREATE PROCEDURE splocal_InsertWorkCellDimension
 AS
 	DECLARE @SiteId INTEGER
 
-	SELECT TOP 1 @SiteId = sd.SiteId 
+	SELECT TOP 1 @SiteId = sd.SiteId
 	FROM @WorkCellDimension wd
 	JOIN SITE_DIMENSION sd ON wd.DataServerName = sd.DataServerName
-	
+
 	INSERT INTO dbo.WorkCell_Dimension (
 		[PUDesc],
 		[PUDescGlobal],
@@ -23,7 +23,7 @@ AS
 		[Extended_Info],
 		[SITE_DIMENSION_SiteId],
 		[LINE_DIMENSION_CentralLineId]
-	)	
+	)
 	SELECT
 		wd.[PUDesc],
 		wd.[PUDescGlobal],
@@ -37,32 +37,29 @@ AS
 		wd.[Extended_Info],
 		@SiteId AS SITE_DIMENSION_SiteId,
 		ld.CentralLineId AS LINE_DIMENSION_CentralLineId
-		FROM  @WorkCellDimension wd 
+		FROM  @WorkCellDimension wd
 		JOIN dbo.LINE_DIMENSION ld ON wd.PLID = ld.PLId AND ld.SITE_DIMENSION_SiteId = @SiteId
-		WHERE NOT EXISTS (  SELECT * 
-							FROM dbo.WorkCell_Dimension u 
+		WHERE NOT EXISTS (  SELECT *
+							FROM dbo.WorkCell_Dimension u
 							WHERE
-							u.[WorkCellId]					= wd.[WorkCellId] AND 
+							u.[WorkCellId]					= wd.[WorkCellId] AND
 							u.SITE_DIMENSION_SiteId = @SiteId
-							) 
-
-
-
+							)
 
 Update T SET
-		t.[PUDesc]             =    s.[PUDesc],
-		t.[PUDescGlobal]       =    s.[PUDescGlobal],
-		t.[PUId]               =    s.[PUId],
-		t.[WorkCellId]         =    s.[WorkCellId],
-		t.[PLId]               =    s.[PLId],
-		t.[VSId]               =    s.[VSId],
-		t.[Class]              =    s.[Class],
-		t.[IsActiveDowntime]   =    s.[IsActiveDowntime],
-		t.[Equipment_Type]     =    s.[Equipment_Type],
-		t.[Extended_Info]      =    s.[Extended_Info]
-from dbo.WorkCell_Dimension T 
+		t.[PUDesc]			= s.[PUDesc],
+		t.[PUDescGlobal]	= s.[PUDescGlobal],
+		t.[PUId]			= s.[PUId],
+		t.[WorkCellId]		= s.[WorkCellId],
+		t.[PLId]			= s.[PLId],
+		t.[VSId]			= s.[VSId],
+		t.[Class]			= s.[Class],
+		t.[IsActiveDowntime]= s.[IsActiveDowntime],
+		t.[Equipment_Type]	= s.[Equipment_Type],
+		t.[Extended_Info]	= s.[Extended_Info]
+from dbo.WorkCell_Dimension T
 JOIN (
-                SELECT                              
+				SELECT
 					wd.[PUDesc],
 					wd.[PUDescGlobal],
 					wd.[PUId],
@@ -75,16 +72,15 @@ JOIN (
 					wd.[Extended_Info],
 					@SiteId AS SITE_DIMENSION_SiteId,
 					ld.CentralLineId AS LINE_DIMENSION_CentralLineId
-                FROM @WorkCellDimension wd
+				FROM @WorkCellDimension wd
 				JOIN dbo.LINE_DIMENSION ld ON wd.PLID = ld.PLId AND ld.SITE_DIMENSION_SiteId = @SiteId
 ) S ON (
 			T.SITE_DIMENSION_SiteId			= s.SITE_DIMENSION_SiteId	AND
 			T.[WorkCellId]					= s.[WorkCellId]			AND
-			T.LINE_DIMENSION_CentralLineId	= S.LINE_DIMENSION_CentralLineId
-	    )
+			T.LINE_DIMENSION_CentralLineId	= s.LINE_DIMENSION_CentralLineId
+		)
 
 RETURN
-;
 GO
 
 GRANT EXEC ON TYPE::[dbo].[WorkCell_Dimension_Type]  TO [LocalUser]

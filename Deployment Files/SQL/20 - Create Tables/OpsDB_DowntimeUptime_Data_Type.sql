@@ -1,10 +1,6 @@
-
-GO
-
 --DROP TYPE [dbo].[OpsDB_DowntimeUptime_Data_Type]
 --GO
 
-/****** Object:  UserDefinedTableType [dbo].[OpsDB_DowntimeUptime_Data_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[OpsDB_DowntimeUptime_Data_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[StartTime] [datetime] NULL,
@@ -105,11 +101,5 @@ CREATE TYPE [dbo].[OpsDB_DowntimeUptime_Data_Type] AS TABLE(
 	[Comment_Rtf] [text] NULL,
 	[Repulper_Tons] [decimal](12, 3) NULL,
 	[RcdIdx] [int] NOT NULL
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-

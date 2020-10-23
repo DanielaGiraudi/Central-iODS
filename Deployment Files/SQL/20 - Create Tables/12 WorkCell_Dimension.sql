@@ -31,5 +31,5 @@ GO
 
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[WorkCell_Dimension]') AND name = N'IDX_UQ_WORKCELL_DIMENSION_SiteId_WorkcellId')
 	CREATE UNIQUE NONCLUSTERED INDEX [IDX_UQ_WORKCELL_DIMENSION_SiteId_WorkcellId] ON [dbo].[WorkCell_Dimension]
-		([SITE_DIMENSION_SiteId] , [WorkCellId])
+		([SITE_DIMENSION_SiteId], [WorkCellId])
 GO

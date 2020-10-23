@@ -1,10 +1,6 @@
-
-GO
-
 DROP TYPE [dbo].[OpsDB_Production_Data_Type]
 GO
 
-/****** Object:  UserDefinedTableType [dbo].[WorkCell_Dimension_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[OpsDB_Production_Data_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[StartTime] [datetime] NULL,
@@ -63,11 +59,5 @@ CREATE TYPE [dbo].[OpsDB_Production_Data_Type] AS TABLE(
 	[ZoneGrpDesc] [nvarchar](255) NULL,
 	[ProdRecHash] [varbinary](64) NULL,
 	[RcdIdx] [bigint] NOT NULL,
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-

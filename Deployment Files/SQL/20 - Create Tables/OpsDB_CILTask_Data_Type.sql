@@ -1,10 +1,6 @@
-
-GO
-
 --DROP TYPE [dbo].[Opsdb_CILTasks_Rawdata_Type]
 --GO
 
-/****** Object:  UserDefinedTableType [dbo].[Opsdb_CILTasks_Rawdata_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[Opsdb_CILTasks_Rawdata_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[Deptid] [int] NOT NULL,
@@ -51,14 +47,5 @@ CREATE TYPE [dbo].[Opsdb_CILTasks_Rawdata_Type] AS TABLE(
 	[Site] [nvarchar](200) NOT NULL,
 	[StubberUser] [bit] NULL,
 	[RcdIdx] [bigint] NOT NULL,
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-
-select * from [dbo].[Transfer_Parameter_Data]
-
-update

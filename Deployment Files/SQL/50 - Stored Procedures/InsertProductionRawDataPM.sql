@@ -1,4 +1,4 @@
---DROP PROCEDURE splocal_InsertProductionRawDataPM;
+--DROP PROCEDURE splocal_InsertProductionRawDataPM
 --GO
 
 create PROCEDURE splocal_InsertProductionRawDataPM
@@ -6,10 +6,10 @@ create PROCEDURE splocal_InsertProductionRawDataPM
 AS
 	DECLARE @SiteId INTEGER
 
-	SELECT TOP 1 @SiteId = sd.SiteId 
+	SELECT TOP 1 @SiteId = sd.SiteId
 	FROM @ProductionRawDataPM prd
 	JOIN SITE_DIMENSION sd ON prd.DataServerName = sd.DataServerName
-	
+
 	INSERT INTO dbo.OpsDB_Production_Data_PM (
 		[StartTime],
 		[EndTime],
@@ -129,7 +129,7 @@ AS
 		[RcdIdx],
 		[SITE_DIMENSION_SiteId],
 		[LINE_DIMENSION_CentralLineId]
-	)	
+	)
 	SELECT
 		prd.[StartTime],
 		prd.[EndTime],
@@ -251,137 +251,134 @@ AS
 		ld.CentralLineId AS LINE_DIMENSION_CentralLineId
 		FROM  @ProductionRawDataPM prd
 		JOIN dbo.LINE_DIMENSION ld ON prd.PLID = ld.PLId AND ld.SITE_DIMENSION_SiteId = @SiteId
-		WHERE NOT EXISTS (  SELECT * 
-							FROM dbo.OpsDB_Production_Data_PM u 
+		WHERE NOT EXISTS (  SELECT *
+							FROM dbo.OpsDB_Production_Data_PM u
 							WHERE
-							u.RCDIDX				= prd.RcdIdx AND 
+							u.RCDIDX				= prd.RcdIdx AND
 							u.SITE_DIMENSION_SiteId = ld.SITE_DIMENSION_SiteId  AND
 							u.LINE_DIMENSION_CentralLineId	= ld.CentralLineId
-							) 
-
-
-
+							)
 
 Update T SET
-	T.[StartTime]                        =   S.[StartTime],
-	T.[EndTime]                          =   S.[EndTime],
-	T.[StartTimeUTC]                     =   S.[StartTimeUTC],
-	T.[EndTimeUTC]                       =   S.[EndTimeUTC],
-	T.[Site]                             =   S.[Site],
-	T.[PLID]                             =   S.[PLID],
-	T.[PLDesc]                           =   S.[PLDesc],
-	T.[PUID]                             =   S.[PUID],
-	T.[PUDesc]                           =   S.[PUDesc],
-	T.[ProdId]                           =   S.[ProdId],
-	T.[ProdCode]                         =   S.[ProdCode],
-	T.[ProdDesc]                         =   S.[ProdDesc],
-	T.[ProdFam]                          =   S.[ProdFam],
-	T.[ProdGroup]                        =   S.[ProdGroup],
-	T.[ShiftDesc]                        =   S.[ShiftDesc],
-	T.[TeamDesc]                         =   S.[TeamDesc],
-	T.[NPTStatus]                        =   S.[NPTStatus],
-	T.[ProcessOrder]                     =   S.[ProcessOrder],
-	T.[ProductTime]                      =   S.[ProductTime],
-	T.[GoodTons]                         =   S.[GoodTons],
-	T.[RejectTons]                       =   S.[RejectTons],
-	T.[HoldTons]                         =   S.[HoldTons],
-	T.[FireTons]                         =   S.[FireTons],
-	T.[LastCleaningBlades]				 =	 S.[LastCleaningBlades],
-	T.[LastCrepingBlades]				 =	 S.[LastCrepingBlades],
-	T.[LifeCrepingBlades]				 =	 S.[LifeCrepingBlades],
-	T.[LifeCleaningBlades]				 =	 S.[LifeCleaningBlades],
-	T.[TAYTons]                          =   S.[TAYTons],
-	T.[SlabTons]                         =   S.[SlabTons],
-	T.[RepulperTons]                     =   S.[RepulperTons],
-	T.[TeardownTons]                     =   S.[TeardownTons],
-	T.[RATons]                           =   S.[RATons],
-	T.[TotalTons]                        =   S.[TotalTons],
-	T.[UnExpTons]                        =   S.[UnExpTons],
-	T.[GoodRolls]                        =   S.[GoodRolls],
-	T.[RejectRolls]                      =   S.[RejectRolls],
-	T.[HoldRolls]                        =   S.[HoldRolls],
-	T.[FireRolls]                        =   S.[FireRolls],
-	T.[CleaningBlades]                   =   S.[CleaningBlades],
-	T.[CrepingBlades]                    =   S.[CrepingBlades],
-	T.[Sheetbreaks]                      =   S.[Sheetbreaks],
-	T.[SheetbreaksTime]                  =   S.[SheetbreaksTime],
-	T.[Stops]                            =   S.[Stops],
-	T.[YankeeSpeedSum]                   =   S.[YankeeSpeedSum],
-	T.[YankeeSpeedCount]                 =   S.[YankeeSpeedCount],
-	T.[ReelSpeedSum]                     =   S.[ReelSpeedSum],
-	T.[ReelSpeedCount]                   =   S.[ReelSpeedCount],
-	T.[FormingWireLife]                  =   S.[FormingWireLife],
-	T.[BackingWireLife]                  =   S.[BackingWireLife],
-	T.[BeltLife]                         =   S.[BeltLife],
-	T.[Belt_Id]                          =   S.[Belt_Id],
-	T.[T3rd_Furnish_Sum]                 =   S.[T3rd_Furnish_Sum],
-	T.[CTMP_Sum]                         =   S.[CTMP_Sum],
-	T.[Fiber_1_Sum]                      =   S.[Fiber_1_Sum],
-	T.[Fiber_2_Sum]                      =   S.[Fiber_2_Sum],
-	T.[Long_Fiber_Sum]                   =   S.[Long_Fiber_Sum],
-	T.[Machine_Broke_Sum]                =   S.[Machine_Broke_Sum],
-	T.[Product_Broke_Sum]                =   S.[Product_Broke_Sum],
-	T.[Short_Fiber_Sum]                  =   S.[Short_Fiber_Sum],
-	T.[Absorb_Aid_Towel_Sum]             =   S.[Absorb_Aid_Towel_Sum],
-	T.[Aloe_E_Additive_Sum]              =   S.[Aloe_E_Additive_Sum],
-	T.[Biocide_Sum]                      =   S.[Biocide_Sum],
-	T.[Cat_Promoter_Sum]                 =   S.[Cat_Promoter_Sum],
-	T.[Chem_1_Sum]                       =   S.[Chem_1_Sum],
-	T.[Chem_2_Sum]                       =   S.[Chem_2_Sum],
-	T.[Chlorine_Control_Sum]             =   S.[Chlorine_Control_Sum],
-	T.[Defoamer_Sum]                     =   S.[Defoamer_Sum],
-	T.[Dry_Strength_Facial_Sum]          =   S.[Dry_Strength_Facial_Sum],
-	T.[Dry_Strength_Tissue_Sum]          =   S.[Dry_Strength_Tissue_Sum],
-	T.[Recycle_Fiber_Sum]                =   S.[Recycle_Fiber_Sum],
-	T.[Dry_Strength_Towel_Sum]           =   S.[Dry_Strength_Towel_Sum],
-	T.[Dye_1_Sum]                        =   S.[Dye_1_Sum],
-	T.[Dye_2_Sum]                        =   S.[Dye_2_Sum],
-	T.[Emulsion_1_Sum]                   =   S.[Emulsion_1_Sum],
-	T.[Emulsion_2_Sum]                   =   S.[Emulsion_2_Sum],
-	T.[Flocculant_Sum]                   =   S.[Flocculant_Sum],
-	T.[Glue_Adhesive_Sum]                =   S.[Glue_Adhesive_Sum],
-	T.[Glue_Crepe_Aid_Sum]               =   S.[Glue_Crepe_Aid_Sum],
-	T.[Glue_Release_Aid_Sum]             =   S.[Glue_Release_Aid_Sum],
-	T.[Glue_Total_Sum]                   =   S.[Glue_Total_Sum],
-	T.[pH_Control_Tissue_Acid_Sum]       =   S.[pH_Control_Tissue_Acid_Sum],
-	T.[pH_Control_Towel_Base_Sum]        =   S.[pH_Control_Towel_Base_Sum],
-	T.[Single_Glue_Sum]                  =   S.[Single_Glue_Sum],
-	T.[Softener_Facial_Sum]              =   S.[Softener_Facial_Sum],
-	T.[Softener_Tissue_Sum]              =   S.[Softener_Tissue_Sum],
-	T.[Softener_Towel_Sum]               =   S.[Softener_Towel_Sum],
-	T.[Wet_Strength_Facial_Sum]          =   S.[Wet_Strength_Facial_Sum],
-	T.[Wet_Strength_Tissue_Sum]          =   S.[Wet_Strength_Tissue_Sum],
-	T.[Wet_Strength_Towel_Sum]           =   S.[Wet_Strength_Towel_Sum],
-	T.[Air_Sum]                          =   S.[Air_Sum],
-	T.[Air_UOM]                          =   S.[Air_UOM],
-	T.[Air_Per_YKT]                      =   S.[Air_Per_YKT],
-	T.[Electric_Sum]                     =   S.[Electric_Sum],
-	T.[Electric_UOM]                     =   S.[Electric_UOM],
-	T.[Electric_Per_YKT]                 =   S.[Electric_Per_YKT],
-	T.[Gas_Sum]                          =   S.[Gas_Sum],
-	T.[Gas_UOM]                          =   S.[Gas_UOM],
-	T.[Gas_Per_YKT]                      =   S.[Gas_Per_YKT],
-	T.[Steam_Sum]                        =   S.[Steam_Sum],
-	T.[Steam_UOM]                        =   S.[Steam_UOM],
-	T.[Steam_Per_YKT]                    =   S.[Steam_Per_YKT],
-	T.[Water_Sum]                        =   S.[Water_Sum],
-	T.[Water_UOM]                        =   S.[Water_UOM],
-	T.[Water_Per_YKT]                    =   S.[Water_Per_YKT],
-	T.[GRHF_Tons]                        =   S.[GRHF_Tons],
-	T.[All_Tons]                         =   S.[All_Tons],
-	T.[All_Furnish]                      =   S.[All_Furnish],
-	T.[All_Furnish_Perc_Calc]            =   S.[All_Furnish_Perc_Calc],
-	T.[Total_Roll_Status_Cnt]            =   S.[Total_Roll_Status_Cnt],
-	T.[Ts]                               =   S.[Ts],
-	T.[DeleteFlag]                       =   S.[DeleteFlag],
-	T.[GI_Downtime]                      =   S.[GI_Downtime],
-	T.[GE_Downtime]                      =   S.[GE_Downtime],
-	T.[GI_Uptime]                        =   S.[GI_Uptime],
-	T.[GE_Uptime]                        =   S.[GE_Uptime],
-	T.[RcdIdx]                           =   S.[RcdIdx]
-from dbo.OpsDB_Production_Data_PM T 
+	T.[StartTime]					= s.[StartTime],
+	T.[EndTime]						= s.[EndTime],
+	T.[StartTimeUTC]				= s.[StartTimeUTC],
+	T.[EndTimeUTC]					= s.[EndTimeUTC],
+	T.[Site]						= s.[Site],
+	T.[PLID]						= s.[PLID],
+	T.[PLDesc]						= s.[PLDesc],
+	T.[PUID]						= s.[PUID],
+	T.[PUDesc]						= s.[PUDesc],
+	T.[ProdId]						= s.[ProdId],
+	T.[ProdCode]					= s.[ProdCode],
+	T.[ProdDesc]					= s.[ProdDesc],
+	T.[ProdFam]						= s.[ProdFam],
+	T.[ProdGroup]					= s.[ProdGroup],
+	T.[ShiftDesc]					= s.[ShiftDesc],
+	T.[TeamDesc]					= s.[TeamDesc],
+	T.[NPTStatus]					= s.[NPTStatus],
+	T.[ProcessOrder]				= s.[ProcessOrder],
+	T.[ProductTime]					= s.[ProductTime],
+	T.[GoodTons]					= s.[GoodTons],
+	T.[RejectTons]					= s.[RejectTons],
+	T.[HoldTons]					= s.[HoldTons],
+	T.[FireTons]					= s.[FireTons],
+	T.[LastCleaningBlades]			= s.[LastCleaningBlades],
+	T.[LastCrepingBlades]			= s.[LastCrepingBlades],
+	T.[LifeCrepingBlades]			= s.[LifeCrepingBlades],
+	T.[LifeCleaningBlades]			= s.[LifeCleaningBlades],
+	T.[TAYTons]						= s.[TAYTons],
+	T.[SlabTons]					= s.[SlabTons],
+	T.[RepulperTons]				= s.[RepulperTons],
+	T.[TeardownTons]				= s.[TeardownTons],
+	T.[RATons]						= s.[RATons],
+	T.[TotalTons]					= s.[TotalTons],
+	T.[UnExpTons]					= s.[UnExpTons],
+	T.[GoodRolls]					= s.[GoodRolls],
+	T.[RejectRolls]					= s.[RejectRolls],
+	T.[HoldRolls]					= s.[HoldRolls],
+	T.[FireRolls]					= s.[FireRolls],
+	T.[CleaningBlades]				= s.[CleaningBlades],
+	T.[CrepingBlades]				= s.[CrepingBlades],
+	T.[Sheetbreaks]					= s.[Sheetbreaks],
+	T.[SheetbreaksTime]				= s.[SheetbreaksTime],
+	T.[Stops]						= s.[Stops],
+	T.[YankeeSpeedSum]				= s.[YankeeSpeedSum],
+	T.[YankeeSpeedCount]			= s.[YankeeSpeedCount],
+	T.[ReelSpeedSum]				= s.[ReelSpeedSum],
+	T.[ReelSpeedCount]				= s.[ReelSpeedCount],
+	T.[FormingWireLife]				= s.[FormingWireLife],
+	T.[BackingWireLife]				= s.[BackingWireLife],
+	T.[BeltLife]					= s.[BeltLife],
+	T.[Belt_Id]						= s.[Belt_Id],
+	T.[T3rd_Furnish_Sum]			= s.[T3rd_Furnish_Sum],
+	T.[CTMP_Sum]					= s.[CTMP_Sum],
+	T.[Fiber_1_Sum]					= s.[Fiber_1_Sum],
+	T.[Fiber_2_Sum]					= s.[Fiber_2_Sum],
+	T.[Long_Fiber_Sum]				= s.[Long_Fiber_Sum],
+	T.[Machine_Broke_Sum]			= s.[Machine_Broke_Sum],
+	T.[Product_Broke_Sum]			= s.[Product_Broke_Sum],
+	T.[Short_Fiber_Sum]				= s.[Short_Fiber_Sum],
+	T.[Absorb_Aid_Towel_Sum]		= s.[Absorb_Aid_Towel_Sum],
+	T.[Aloe_E_Additive_Sum]			= s.[Aloe_E_Additive_Sum],
+	T.[Biocide_Sum]					= s.[Biocide_Sum],
+	T.[Cat_Promoter_Sum]			= s.[Cat_Promoter_Sum],
+	T.[Chem_1_Sum]					= s.[Chem_1_Sum],
+	T.[Chem_2_Sum]					= s.[Chem_2_Sum],
+	T.[Chlorine_Control_Sum]		= s.[Chlorine_Control_Sum],
+	T.[Defoamer_Sum]				= s.[Defoamer_Sum],
+	T.[Dry_Strength_Facial_Sum]		= s.[Dry_Strength_Facial_Sum],
+	T.[Dry_Strength_Tissue_Sum]		= s.[Dry_Strength_Tissue_Sum],
+	T.[Recycle_Fiber_Sum]			= s.[Recycle_Fiber_Sum],
+	T.[Dry_Strength_Towel_Sum]		= s.[Dry_Strength_Towel_Sum],
+	T.[Dye_1_Sum]					= s.[Dye_1_Sum],
+	T.[Dye_2_Sum]					= s.[Dye_2_Sum],
+	T.[Emulsion_1_Sum]				= s.[Emulsion_1_Sum],
+	T.[Emulsion_2_Sum]				= s.[Emulsion_2_Sum],
+	T.[Flocculant_Sum]				= s.[Flocculant_Sum],
+	T.[Glue_Adhesive_Sum]			= s.[Glue_Adhesive_Sum],
+	T.[Glue_Crepe_Aid_Sum]			= s.[Glue_Crepe_Aid_Sum],
+	T.[Glue_Release_Aid_Sum]		= s.[Glue_Release_Aid_Sum],
+	T.[Glue_Total_Sum]				= s.[Glue_Total_Sum],
+	T.[pH_Control_Tissue_Acid_Sum]	= s.[pH_Control_Tissue_Acid_Sum],
+	T.[pH_Control_Towel_Base_Sum]	= s.[pH_Control_Towel_Base_Sum],
+	T.[Single_Glue_Sum]				= s.[Single_Glue_Sum],
+	T.[Softener_Facial_Sum]			= s.[Softener_Facial_Sum],
+	T.[Softener_Tissue_Sum]			= s.[Softener_Tissue_Sum],
+	T.[Softener_Towel_Sum]			= s.[Softener_Towel_Sum],
+	T.[Wet_Strength_Facial_Sum]		= s.[Wet_Strength_Facial_Sum],
+	T.[Wet_Strength_Tissue_Sum]		= s.[Wet_Strength_Tissue_Sum],
+	T.[Wet_Strength_Towel_Sum]		= s.[Wet_Strength_Towel_Sum],
+	T.[Air_Sum]						= s.[Air_Sum],
+	T.[Air_UOM]						= s.[Air_UOM],
+	T.[Air_Per_YKT]					= s.[Air_Per_YKT],
+	T.[Electric_Sum]				= s.[Electric_Sum],
+	T.[Electric_UOM]				= s.[Electric_UOM],
+	T.[Electric_Per_YKT]			= s.[Electric_Per_YKT],
+	T.[Gas_Sum]						= s.[Gas_Sum],
+	T.[Gas_UOM]						= s.[Gas_UOM],
+	T.[Gas_Per_YKT]					= s.[Gas_Per_YKT],
+	T.[Steam_Sum]					= s.[Steam_Sum],
+	T.[Steam_UOM]					= s.[Steam_UOM],
+	T.[Steam_Per_YKT]				= s.[Steam_Per_YKT],
+	T.[Water_Sum]					= s.[Water_Sum],
+	T.[Water_UOM]					= s.[Water_UOM],
+	T.[Water_Per_YKT]				= s.[Water_Per_YKT],
+	T.[GRHF_Tons]					= s.[GRHF_Tons],
+	T.[All_Tons]					= s.[All_Tons],
+	T.[All_Furnish]					= s.[All_Furnish],
+	T.[All_Furnish_Perc_Calc]		= s.[All_Furnish_Perc_Calc],
+	T.[Total_Roll_Status_Cnt]		= s.[Total_Roll_Status_Cnt],
+	T.[Ts]							= s.[Ts],
+	T.[DeleteFlag]					= s.[DeleteFlag],
+	T.[GI_Downtime]					= s.[GI_Downtime],
+	T.[GE_Downtime]					= s.[GE_Downtime],
+	T.[GI_Uptime]					= s.[GI_Uptime],
+	T.[GE_Uptime]					= s.[GE_Uptime],
+	T.[RcdIdx]						= s.[RcdIdx]
+from dbo.OpsDB_Production_Data_PM T
 JOIN (
-                SELECT                              
+				SELECT
 					prd.[StartTime],
 					prd.[EndTime],
 					prd.[StartTimeUTC],
@@ -500,14 +497,13 @@ JOIN (
 					prd.[RcdIdx],
 					@SiteId AS SITE_DIMENSION_SiteId,
 					ld.CentralLineId AS LINE_DIMENSION_CentralLineId
-                FROM @ProductionRawDataPM prd
+				FROM @ProductionRawDataPM prd
 				JOIN dbo.LINE_DIMENSION ld ON prd.PLID = ld.PLId AND ld.SITE_DIMENSION_SiteId = @SiteId
 ) S ON (
 			T.SITE_DIMENSION_SiteId			= s.SITE_DIMENSION_SiteId AND
-			T.LINE_DIMENSION_CentralLineId	= S.LINE_DIMENSION_CentralLineId AND
-			T.RcdIdx						= s.RcdIdx	
-	    )
-
+			T.LINE_DIMENSION_CentralLineId	= s.LINE_DIMENSION_CentralLineId AND
+			T.RcdIdx						= s.RcdIdx
+		)
 
 	UPDATE [dbo].[Transfer_Parameter_Data]
 		SET LastModifytime = ( SELECT MAX(TS) FROM @ProductionRawDataPM )
@@ -515,7 +511,6 @@ JOIN (
 	AND SiteId = @SiteId
 
 RETURN
-;
 GO
 
 GRANT EXEC ON TYPE::[dbo].[OpsDB_Production_Data_PM_Type]  TO [LocalUser]

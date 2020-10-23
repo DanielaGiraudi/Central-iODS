@@ -1,10 +1,7 @@
 
-GO
-
 DROP TYPE [dbo].[LINE_DIMENSION_Type]
 GO
 
-/****** Object:  UserDefinedTableType [dbo].[LINE_DIMENSION_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[LINE_DIMENSION_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[LineId] [int] NOT NULL,
@@ -25,9 +22,5 @@ CREATE TYPE [dbo].[LINE_DIMENSION_Type] AS TABLE(
 	[ConfigType] [nvarchar](50) NULL,
 	[Category] [varchar](250) NULL,
 	[IsActive] [bit] NOT NULL,
-	PRIMARY KEY CLUSTERED 
-(
-	[LineId] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([LineId]))
 GO

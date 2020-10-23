@@ -1,10 +1,6 @@
-
-GO
-
 --DROP TYPE [dbo].[OpsDB_QA_CL_Data_Type]
 --GO
 
-/****** Object:  UserDefinedTableType [dbo].[OpsDB_ELP_Data_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[OpsDB_QA_CL_Data_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[VarId] [int] NOT NULL,
@@ -69,11 +65,5 @@ CREATE TYPE [dbo].[OpsDB_QA_CL_Data_Type] AS TABLE(
 	[CommentModifOn] [datetime] NULL,
 	[Comment_Rtf] [text] NULL,
 	[RcdIdx] [bigint] NOT NULL
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-

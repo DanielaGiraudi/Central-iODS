@@ -51,11 +51,5 @@ CREATE TYPE [dbo].[OpsDB_Alarms_Data_Type] AS TABLE(
 	[Cause3] [nvarchar](100) NULL,
 	[SourceVarId] [int] NULL,
 	[RcdIdx] [bigint] NOT NULL
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-

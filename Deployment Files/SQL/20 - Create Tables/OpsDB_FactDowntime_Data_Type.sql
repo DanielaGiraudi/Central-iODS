@@ -75,4 +75,4 @@ CREATE TYPE [dbo].[OpsDB_FactDowntime_Data_Type] AS TABLE(
 	[DChangeOverPackingCODuration] [int] NULL,
 	[Modified_ON] [datetime] NULL
 )
-
+GO

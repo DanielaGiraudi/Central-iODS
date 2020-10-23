@@ -9,9 +9,9 @@ GO
 ----------------------------------------------------------------------------------------------------------------------
 -- DROP StoredProcedure
 ----------------------------------------------------------------------------------------------------------------------
-IF EXISTS (SELECT 1 FROM Information_schema.Routines 
-				WHERE Specific_schema = 'dbo' 
-				AND specific_name = 'splocal_GetLinesBySite' 
+IF EXISTS (SELECT 1 FROM Information_schema.Routines
+				WHERE Specific_schema = 'dbo'
+				AND specific_name = 'splocal_GetLinesBySite'
 				AND Routine_Type = 'PROCEDURE')
 
 BEGIN
@@ -20,21 +20,21 @@ END
 GO
 
 ------------------------------------------------------------------------------------------------------------------------
--- 												OPS Database Script													--	
+-- 												OPS Database Script													--
 --				This Script will create the splocal_GetLinesBySite stored procedure in OpsDataStore			--
 --										SPROC to get Lines by Site.										--
 ------------------------------------------------------------------------------------------------------------------------
--- 												SET TAB SPACING TO 4												--	
+-- 												SET TAB SPACING TO 4												--
 ------------------------------------------------------------------------------------------------------------------------
 --  1.0			2020-10-07		Carreno Maximiliano			created
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-CREATE PROCEDURE [dbo].[splocal_GetLinesBySite]  
+CREATE PROCEDURE [dbo].[splocal_GetLinesBySite]
 --DECLARE
 		@Site				NVARCHAR(MAX)
---------------------------------------------------------------------------------------------------	
-WITH ENCRYPTION 
-AS	
+--------------------------------------------------------------------------------------------------
+WITH ENCRYPTION
+AS
 -------------------------------------------------------------------------------------------------
 --SET @Site = 'Albany'
 
@@ -45,7 +45,7 @@ DECLARE	@strQuery		NVARCHAR(MAX),
 --------------------------------------------------------------------------------------------------
 --	Init local variables
 -------------------------------------------------------------------------------------------------
-SELECT @is_id_site = ISNUMERIC(@Site) 
+SELECT @is_id_site = ISNUMERIC(@Site)
 
 IF @is_id_site = 0
 	SELECT @Site = ISNULL((SELECT SiteId
@@ -61,9 +61,9 @@ IF @is_id_site = 0
 		FROM [dbo].[LINE_DIMENSION] ld WITH(NOLOCK)
 		WHERE ld.SITE_DIMENSION_SiteId = ''' + @Site + ''''
 
-	EXEC sp_executesql @strQuery;
+	EXEC sp_executesql @strQuery
 
 GO
 
-GRANT EXECUTE ON OBJECT ::[dbo].[splocal_GetLinesBySite] TO [LocalUser];
+GRANT EXECUTE ON OBJECT ::[dbo].[splocal_GetLinesBySite] TO [LocalUser]
 GO

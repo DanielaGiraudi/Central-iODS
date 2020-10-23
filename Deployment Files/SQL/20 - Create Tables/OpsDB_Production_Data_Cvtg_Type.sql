@@ -1,10 +1,6 @@
-
-GO
-
 --DROP TYPE [dbo].[OpsDB_Production_Data_Cvtg_Type]
 --GO
 
-/****** Object:  UserDefinedTableType [dbo].[OpsDB_Production_Data_Cvtg_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[OpsDB_Production_Data_Cvtg_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[SITE] [varchar](50) NULL,
@@ -88,11 +84,5 @@ CREATE TYPE [dbo].[OpsDB_Production_Data_Cvtg_Type] AS TABLE(
 	[ts] [datetime] NULL,
 	[deleteflag] [int] NULL,
 	[RcdIdx] [bigint] NOT NULL,
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-

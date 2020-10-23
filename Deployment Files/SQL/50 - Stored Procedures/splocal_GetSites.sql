@@ -9,9 +9,9 @@ GO
 ----------------------------------------------------------------------------------------------------------------------
 -- DROP StoredProcedure
 ----------------------------------------------------------------------------------------------------------------------
-IF EXISTS (SELECT 1 FROM Information_schema.Routines 
-				WHERE Specific_schema = 'dbo' 
-				AND specific_name = 'splocal_GetSites' 
+IF EXISTS (SELECT 1 FROM Information_schema.Routines
+				WHERE Specific_schema = 'dbo'
+				AND specific_name = 'splocal_GetSites'
 				AND Routine_Type = 'PROCEDURE')
 
 BEGIN
@@ -20,24 +20,24 @@ END
 GO
 
 ------------------------------------------------------------------------------------------------------------------------
--- 												OPS Database Script													--	
+-- 												OPS Database Script													--
 --				This Script will create the splocal_GetSites stored procedure in OpsDataStore			--
 --										SPROC to get the Sites.										--
 ------------------------------------------------------------------------------------------------------------------------
--- 												SET TAB SPACING TO 4												--	
+-- 												SET TAB SPACING TO 4												--
 ------------------------------------------------------------------------------------------------------------------------
 --  1.0			2020-10-07		Carreno Maximiliano			created
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------
-CREATE PROCEDURE [dbo].[splocal_GetSites]  
+CREATE PROCEDURE [dbo].[splocal_GetSites]
 
---------------------------------------------------------------------------------------------------	
-WITH ENCRYPTION 
-AS	
+--------------------------------------------------------------------------------------------------
+WITH ENCRYPTION
+AS
 
 	SELECT * FROM dbo.[SITE_DIMENSION] WITH (NOLOCK)
 
 GO
 
-GRANT EXECUTE ON OBJECT ::[dbo].[splocal_GetSites] TO [LocalUser];
+GRANT EXECUTE ON OBJECT ::[dbo].[splocal_GetSites] TO [LocalUser]
 GO

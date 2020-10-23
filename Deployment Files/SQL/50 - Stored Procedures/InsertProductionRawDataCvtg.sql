@@ -1,4 +1,5 @@
-DROP PROCEDURE splocal_InsertProductionRawDataCvtg;
+DROP PROCEDURE splocal_InsertProductionRawDataCvtg
+DROP PROCEDURE splocal_InsertProductionRawDataCvtg
 GO
 
 CREATE PROCEDURE splocal_InsertProductionRawDataCvtg
@@ -6,10 +7,10 @@ CREATE PROCEDURE splocal_InsertProductionRawDataCvtg
 AS
 	DECLARE @SiteId INTEGER
 
-	SELECT TOP 1 @SiteId = sd.SiteId 
+	SELECT TOP 1 @SiteId = sd.SiteId
 	FROM @ProductionRawdataCvtg dtd
 	JOIN SITE_DIMENSION sd ON dtd.DataServerName = sd.DataServerName
-	
+
 	INSERT INTO dbo.OpsDB_Production_Data_Cvtg (
 		[SITE],
 		[ProcessOrder],
@@ -94,7 +95,7 @@ AS
 		[RcdIdx],
 		[SITE_DIMENSION_SiteId],
 		[LINE_DIMENSION_CentralLineId]
-	)	
+	)
 	SELECT
 		prd.[SITE],
 		prd.[ProcessOrder],
@@ -181,101 +182,98 @@ AS
 		ld.CentralLineId AS LINE_DIMENSION_CentralLineId
 		FROM  @ProductionRawdataCvtg prd
 		JOIN dbo.LINE_DIMENSION ld ON prd.PLID = ld.PLId AND ld.SITE_DIMENSION_SiteId = @SiteId
-		WHERE NOT EXISTS (  SELECT * 
-							FROM dbo.OpsDB_Production_Data_Cvtg u 
+		WHERE NOT EXISTS (  SELECT *
+							FROM dbo.OpsDB_Production_Data_Cvtg u
 							WHERE
-							u.RCDIDX				= prd.RcdIdx AND 
+							u.RCDIDX				= prd.RcdIdx AND
 							u.SITE_DIMENSION_SiteId = ld.SITE_DIMENSION_SiteId  AND
 							u.LINE_DIMENSION_CentralLineId	= ld.CentralLineId
-							) 
-
-
-
+							)
 
 Update T SET
-	T.[SITE]                                   =                               S.[SITE],
-	T.[ProcessOrder]                           =                               S.[ProcessOrder],
-	T.[PLId]                                   =                               S.[PLId],
-	T.[PUId]                                   =                               S.[PUId],
-	T.[EventId]                                =                               S.[EventId],
-	T.[StartTime]                              =                               S.[StartTime],
-	T.[EndTime]                                =                               S.[EndTime],
-	T.[StartTimeUTC]                           =                               S.[StartTimeUTC],
-	T.[EndTimeUTC]                             =                               S.[EndTimeUTC],
-	T.[ProdId]                                 =                               S.[ProdId],
-	T.[PLDesc]                                 =                               S.[PLDesc],
-	T.[ReliabilityPUID]                        =                               S.[ReliabilityPUID],
-	T.[PUDesc]                                 =                               S.[PUDesc],
-	T.[ShiftDesc]                              =                               S.[ShiftDesc],
-	T.[TeamDesc]                               =                               S.[TeamDesc],
-	T.[ProdCode]                               =                               S.[ProdCode],
-	T.[ProdDesc]                               =                               S.[ProdDesc],
-	T.[ProdFamily]                             =                               S.[ProdFamily],
-	T.[ProdGroup]                              =                               S.[ProdGroup],
-	T.[PPId]                                   =                               S.[PPId],
-	T.[POStatus]                               =                               S.[POStatus],
-	T.[PPStatusId]                             =                               S.[PPStatusId],
-	T.[BatchNumber]                            =                               S.[BatchNumber],
-	T.[TotalUnits]                             =                               S.[TotalUnits],
-	T.[GoodUnits]                              =                               S.[GoodUnits],
-	T.[RejectUnits]                            =                               S.[RejectUnits],
-	T.[WebWidth]                               =                               S.[WebWidth],
-	T.[SheetWidth]                             =                               S.[SheetWidth],
-	T.[LineSpeedIdeal]                         =                               S.[LineSpeedIdeal],
-	T.[LineSpeedTarget]                        =                               S.[LineSpeedTarget],
-	T.[LineSpeedAvg]                           =                               S.[LineSpeedAvg],
-	T.[TargetLineSpeed]                        =                               S.[TargetLineSpeed],
-	T.[LineStatus]                             =                               S.[LineStatus],
-	T.[RollsPerLog]                            =                               S.[RollsPerLog],
-	T.[RollsInPack]                            =                               S.[RollsInPack],
-	T.[PacksInBundle]                          =                               S.[PacksInBundle],
-	T.[CartonsInCase]                          =                               S.[CartonsInCase],
-	T.[SheetCount]                             =                               S.[SheetCount],
-	T.[ShipUnit]                               =                               S.[ShipUnit],
-	T.[CalendarRuntime]                        =                               S.[CalendarRuntime],
-	T.[ProductionRuntime]                      =                               S.[ProductionRuntime],
-	T.[PlanningRuntime]                        =                               S.[PlanningRuntime],
-	T.[OperationsRuntime]                      =                               S.[OperationsRuntime],
-	T.[SheetLength]                            =                               S.[SheetLength],
-	T.[StatFactor]                             =                               S.[StatFactor],
-	T.[TargetUnits]                            =                               S.[TargetUnits],
-	T.[ActualUnits]                            =                               S.[ActualUnits],
-	T.[OperationsTargetUnits]                  =                               S.[OperationsTargetUnits],
-	T.[HolidayCurtailDT]                       =                               S.[HolidayCurtailDT],
-	T.[PlninterventionDT]                      =                               S.[PlninterventionDT],
-	T.[ChangeOverDT]                           =                               S.[ChangeOverDT],
-	T.[HygCleaningDT]                          =                               S.[HygCleaningDT],
-	T.[EOProjectsDT]                           =                               S.[EOProjectsDT],
-	T.[UnscheduledDT]                          =                               S.[UnscheduledDT],
-	T.[CLAuditsDT]                             =                               S.[CLAuditsDT],
-	T.[IdealUnits]                             =                               S.[IdealUnits],
-	T.[RollWidth2Stage]                        =                               S.[RollWidth2Stage],
-	T.[RollWidth3Stage]                        =                               S.[RollWidth3Stage],
-	T.[SplitUptime]                            =                               S.[SplitUptime],
-	T.[Runtime]                                =                               S.[Runtime],
-	T.[CnvtLineSpeedToSheetLength]             =                               S.[CnvtLineSpeedToSheetLength],
-	T.[CnvtParentRollWidthToSheetWidth]        =                               S.[CnvtParentRollWidthToSheetWidth],
-	T.[DefaultPMRollWidth]                     =                               S.[DefaultPMRollWidth],
-	T.[LineSpeedUOM]                           =                               S.[LineSpeedUOM],
-	T.[SheetLengthSpec]                        =                               S.[SheetLengthSpec],
-	T.[SheetLengthSpecUOM]                     =                               S.[SheetLengthSpecUOM],
-	T.[SheetWidthSpec]                         =                               S.[SheetWidthSpec],
-	T.[SheetWidthSpecUOM]                      =                               S.[SheetWidthSpecUOM],
-	T.[PlannedRejectLogs]                      =                               S.[PlannedRejectLogs],
-	T.[UnplannedRejectLogs]                    =                               S.[UnplannedRejectLogs],
-	T.[BreakoutRejectLogs]                     =                               S.[BreakoutRejectLogs],
-	T.[ManualRejectLogs]                       =                               S.[ManualRejectLogs],
-	T.[OtherRejectLogs]                        =                               S.[OtherRejectLogs],
-	T.[ILOCSetpointTarget]                     =                               S.[ILOCSetpointTarget],
-	T.[ILOCSetpointAverage]                    =                               S.[ILOCSetpointAverage],
-	T.[ILOCSetpointSampleCount]                =                               S.[ILOCSetpointSampleCount],
-	T.[ILOCActualAverage]                      =                               S.[ILOCActualAverage],
-	T.[ILOCActualSampleCount]                  =                               S.[ILOCActualSampleCount],
-	T.[ts]                                     =                               S.[ts],
-	T.[deleteflag]                             =                               S.[deleteflag]		
-from dbo.OpsDB_Production_Data_Cvtg T 
+	T.[SITE]							= s.[SITE],
+	T.[ProcessOrder]					= s.[ProcessOrder],
+	T.[PLId]							= s.[PLId],
+	T.[PUId]							= s.[PUId],
+	T.[EventId]							= s.[EventId],
+	T.[StartTime]						= s.[StartTime],
+	T.[EndTime]							= s.[EndTime],
+	T.[StartTimeUTC]					= s.[StartTimeUTC],
+	T.[EndTimeUTC]						= s.[EndTimeUTC],
+	T.[ProdId]							= s.[ProdId],
+	T.[PLDesc]							= s.[PLDesc],
+	T.[ReliabilityPUID]					= s.[ReliabilityPUID],
+	T.[PUDesc]							= s.[PUDesc],
+	T.[ShiftDesc]						= s.[ShiftDesc],
+	T.[TeamDesc]						= s.[TeamDesc],
+	T.[ProdCode]						= s.[ProdCode],
+	T.[ProdDesc]						= s.[ProdDesc],
+	T.[ProdFamily]						= s.[ProdFamily],
+	T.[ProdGroup]						= s.[ProdGroup],
+	T.[PPId]							= s.[PPId],
+	T.[POStatus]						= s.[POStatus],
+	T.[PPStatusId]						= s.[PPStatusId],
+	T.[BatchNumber]						= s.[BatchNumber],
+	T.[TotalUnits]						= s.[TotalUnits],
+	T.[GoodUnits]						= s.[GoodUnits],
+	T.[RejectUnits]						= s.[RejectUnits],
+	T.[WebWidth]						= s.[WebWidth],
+	T.[SheetWidth]						= s.[SheetWidth],
+	T.[LineSpeedIdeal]					= s.[LineSpeedIdeal],
+	T.[LineSpeedTarget]					= s.[LineSpeedTarget],
+	T.[LineSpeedAvg]					= s.[LineSpeedAvg],
+	T.[TargetLineSpeed]					= s.[TargetLineSpeed],
+	T.[LineStatus]						= s.[LineStatus],
+	T.[RollsPerLog]						= s.[RollsPerLog],
+	T.[RollsInPack]						= s.[RollsInPack],
+	T.[PacksInBundle]					= s.[PacksInBundle],
+	T.[CartonsInCase]					= s.[CartonsInCase],
+	T.[SheetCount]						= s.[SheetCount],
+	T.[ShipUnit]						= s.[ShipUnit],
+	T.[CalendarRuntime]					= s.[CalendarRuntime],
+	T.[ProductionRuntime]				= s.[ProductionRuntime],
+	T.[PlanningRuntime]					= s.[PlanningRuntime],
+	T.[OperationsRuntime]				= s.[OperationsRuntime],
+	T.[SheetLength]						= s.[SheetLength],
+	T.[StatFactor]						= s.[StatFactor],
+	T.[TargetUnits]						= s.[TargetUnits],
+	T.[ActualUnits]						= s.[ActualUnits],
+	T.[OperationsTargetUnits]			= s.[OperationsTargetUnits],
+	T.[HolidayCurtailDT]				= s.[HolidayCurtailDT],
+	T.[PlninterventionDT]				= s.[PlninterventionDT],
+	T.[ChangeOverDT]					= s.[ChangeOverDT],
+	T.[HygCleaningDT]					= s.[HygCleaningDT],
+	T.[EOProjectsDT]					= s.[EOProjectsDT],
+	T.[UnscheduledDT]					= s.[UnscheduledDT],
+	T.[CLAuditsDT]						= s.[CLAuditsDT],
+	T.[IdealUnits]						= s.[IdealUnits],
+	T.[RollWidth2Stage]					= s.[RollWidth2Stage],
+	T.[RollWidth3Stage]					= s.[RollWidth3Stage],
+	T.[SplitUptime]						= s.[SplitUptime],
+	T.[Runtime]							= s.[Runtime],
+	T.[CnvtLineSpeedToSheetLength]		= s.[CnvtLineSpeedToSheetLength],
+	T.[CnvtParentRollWidthToSheetWidth]	= s.[CnvtParentRollWidthToSheetWidth],
+	T.[DefaultPMRollWidth]				= s.[DefaultPMRollWidth],
+	T.[LineSpeedUOM]					= s.[LineSpeedUOM],
+	T.[SheetLengthSpec]					= s.[SheetLengthSpec],
+	T.[SheetLengthSpecUOM]				= s.[SheetLengthSpecUOM],
+	T.[SheetWidthSpec]					= s.[SheetWidthSpec],
+	T.[SheetWidthSpecUOM]				= s.[SheetWidthSpecUOM],
+	T.[PlannedRejectLogs]				= s.[PlannedRejectLogs],
+	T.[UnplannedRejectLogs]				= s.[UnplannedRejectLogs],
+	T.[BreakoutRejectLogs]				= s.[BreakoutRejectLogs],
+	T.[ManualRejectLogs]				= s.[ManualRejectLogs],
+	T.[OtherRejectLogs]					= s.[OtherRejectLogs],
+	T.[ILOCSetpointTarget]				= s.[ILOCSetpointTarget],
+	T.[ILOCSetpointAverage]				= s.[ILOCSetpointAverage],
+	T.[ILOCSetpointSampleCount]			= s.[ILOCSetpointSampleCount],
+	T.[ILOCActualAverage]				= s.[ILOCActualAverage],
+	T.[ILOCActualSampleCount]			= s.[ILOCActualSampleCount],
+	T.[ts]								= s.[ts],
+	T.[deleteflag]						= s.[deleteflag]
+from dbo.OpsDB_Production_Data_Cvtg T
 JOIN (
-                SELECT                              
+				SELECT
 					prd.[SITE],
 					prd.[ProcessOrder],
 					prd.[PLId],
@@ -359,14 +357,13 @@ JOIN (
 					prd.[RcdIdx],
 					@SiteId AS SITE_DIMENSION_SiteId,
 					ld.CentralLineId AS LINE_DIMENSION_CentralLineId
-                FROM @ProductionRawdataCvtg prd
+				FROM @ProductionRawdataCvtg prd
 				JOIN dbo.LINE_DIMENSION ld ON prd.PLID = ld.PLId AND ld.SITE_DIMENSION_SiteId = @SiteId
 ) S ON (
 			T.SITE_DIMENSION_SiteId			= s.SITE_DIMENSION_SiteId AND
-			T.LINE_DIMENSION_CentralLineId	= S.LINE_DIMENSION_CentralLineId AND
-			T.RcdIdx						= s.RcdIdx	
-	    )
-
+			T.LINE_DIMENSION_CentralLineId	= s.LINE_DIMENSION_CentralLineId AND
+			T.RcdIdx						= s.RcdIdx
+		)
 
 	UPDATE [dbo].[Transfer_Parameter_Data]
 		SET LastModifytime = ( SELECT MAX(TS) FROM @ProductionRawdataCvtg )
@@ -374,7 +371,6 @@ JOIN (
 	AND SiteId = @SiteId
 
 RETURN
-;
 GO
 
 GRANT EXEC ON TYPE::[dbo].[OpsDB_Production_Data_Cvtg_Type]  TO [LocalUser]

@@ -16,11 +16,10 @@ CREATE TYPE [dbo].[LastShift_Dimension_Type] AS TABLE(
 	[WORKCELL_DIMENSION_CentralWorkCellId] [int],
 	[Datedesc] [nchar](50) NULL,
 	[LastDate] [datetime] NULL
-	PRIMARY KEY CLUSTERED 
+	PRIMARY KEY CLUSTERED
 (
 	[LINE_DIMENSION_CentralLineId] ASC,
 	[WORKCELL_DIMENSION_CentralWorkCellId] asc
 )WITH (IGNORE_DUP_KEY = OFF)
 )
 GO
-

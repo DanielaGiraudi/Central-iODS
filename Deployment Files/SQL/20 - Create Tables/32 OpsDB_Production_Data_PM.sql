@@ -137,5 +137,5 @@ GO
 
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[OpsDB_Production_Data_PM]') AND name = N'IDX_UQ_OpsDB_Production_Data_PM_SiteId_RcdIdx')
 	CREATE UNIQUE NONCLUSTERED INDEX [IDX_UQ_OpsDB_Production_Data_PM_SiteId_RcdIdx] ON [dbo].[OpsDB_Production_Data_PM]
-		([SITE_DIMENSION_SiteId] , [RcdIdx
+		([SITE_DIMENSION_SiteId], [RcdIdx
 GO

@@ -1,10 +1,6 @@
-
+DROP TYPE [dbo].[OpsDB_Production_Data_PM_Type]
 GO
 
---DROP TYPE [dbo].[OpsDB_Production_Data_PM_Type]
-GO
-
-/****** Object:  UserDefinedTableType [dbo].[OpsDB_Production_Data_PM_Type]    Script Date: 9/1/2020 2:56:17 PM ******/
 CREATE TYPE [dbo].[OpsDB_Production_Data_PM_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
 	[StartTime] [datetime] NULL,
@@ -123,9 +119,5 @@ CREATE TYPE [dbo].[OpsDB_Production_Data_PM_Type] AS TABLE(
 	[GI_Uptime] [decimal](10, 2) NULL,
 	[GE_Uptime] [decimal](10, 2) NULL,
 	[RcdIdx] [bigint] NOT NULL,
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO

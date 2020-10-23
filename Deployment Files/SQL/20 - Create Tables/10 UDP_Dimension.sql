@@ -22,5 +22,5 @@ GO
 
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[UDP_Dimension]') AND name = N'IDX_UQ_UDP_Dimension_SiteId_UDPIdx')
 	CREATE UNIQUE NONCLUSTERED INDEX [IDX_UQ_UDP_Dimension_SiteId_UDPIdx] ON [dbo].[UDP_Dimension]
-		([SITE_DIMENSION_SiteId] , [UDPIdx])
+		([SITE_DIMENSION_SiteId], [UDPIdx])
 GO

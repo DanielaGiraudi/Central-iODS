@@ -86,5 +86,5 @@ GO
 
 IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[OpsDB_VariablesTasks_RawData]') AND name = N'IDX_UQ_OpsDB_VariablesTasks_RawData_SiteId_RcdIdx')
 	CREATE UNIQUE NONCLUSTERED INDEX [IDX_UQ_OpsDB_VariablesTasks_RawData_SiteId_RcdIdx] ON [dbo].[OpsDB_VariablesTasks_RawData]
-		([SITE_DIMENSION_SiteId] , [RcdIdx])
+		([SITE_DIMENSION_SiteId], [RcdIdx])
 END

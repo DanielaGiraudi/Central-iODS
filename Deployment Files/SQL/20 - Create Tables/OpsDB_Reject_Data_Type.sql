@@ -1,9 +1,5 @@
-
-GO
-
 --DROP TYPE [dbo].[OpsDB_Rejects_Data_Type]
 --GO
-
 
 CREATE TYPE [dbo].[OpsDB_Rejects_Data_Type] AS TABLE(
 	[DataServerName] [varchar](100) NULL,
@@ -45,11 +41,5 @@ CREATE TYPE [dbo].[OpsDB_Rejects_Data_Type] AS TABLE(
 	[ZoneDesc] [nvarchar](255) NULL,
 	[ZoneGrpDesc] [nvarchar](255) NULL,
 	[RcdIdx] [int] NOT NULL
-	PRIMARY KEY CLUSTERED 
-(
-	[RcdIdx] ASC
-)WITH (IGNORE_DUP_KEY = OFF)
-)
+	PRIMARY KEY CLUSTERED ([RcdIdx]))
 GO
-
-

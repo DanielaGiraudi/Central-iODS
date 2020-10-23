@@ -15,10 +15,9 @@ CREATE TYPE [dbo].[FACT_UDPs_Type] AS TABLE(
 	[UDP_Dimension_UDPIdx] [bigint] NOT NULL,
 	[History_id] [bigint] NULL,
 	[Idx] [bigint] NOT NULL,
-	PRIMARY KEY CLUSTERED 
+	PRIMARY KEY CLUSTERED
 (
 	[Idx] ASC
 )WITH (IGNORE_DUP_KEY = OFF)
 )
 GO
-
